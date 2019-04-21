@@ -487,8 +487,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -519919863
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1b4a8fdd39d3a45d0a9ee484ad6800ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -509,7 +509,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2040416184}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.34, y: -4.16, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_Children: []
   m_Father: {fileID: 0}
@@ -527,4 +527,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62282f9f5d469df41b139770378f935a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laserPrefab: {fileID: 5697097453912137346, guid: 51c6fd2b0955d064abe0ed38ce660e45,
+    type: 3}
+  fireRate: 0.25
+  canFire: 0
   speed: 5
