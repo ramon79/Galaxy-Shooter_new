@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public bool canTripleShot = false;
 
     public bool isSpeedBoostActive = false;
+    public bool shieldsActive = false;
     public int lives = 3;
 
     [SerializeField]
@@ -21,6 +22,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject _tripleShotPrefab;
+    [SerializeField]
+    private GameObject _shieldGameObject;
     [SerializeField]
     private float _fireRate = 0.25f;
     
@@ -128,6 +131,13 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+        if(shieldsActive == true)
+        {
+            shieldsActive =false;
+            _shieldGameObject.SetActive(false);
+            return;
+        }
+        
         lives--;
         if(lives < 1)
         {
@@ -151,6 +161,14 @@ public class Player : MonoBehaviour
         StartCoroutine(SpeedBooseDownRoutine());
 
     }
+    public void EnableShields()
+    {
+        shieldsActive = true;
+        _shieldGameObject.SetActive(true);
+
+
+    }
+
 
     //coroutine method (ienumerator) to powerdown the speed
     public IEnumerator TripleShotPowerDownRoutine()
