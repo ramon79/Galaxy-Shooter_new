@@ -5,7 +5,16 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
+
     public bool canTripleShot = false;
+
+    public bool isSpeedBoostActive = false;
+    public int lives = 3;
+
+    [SerializeField]
+    private GameObject _explosionPrefab;
+
+
 
     [SerializeField]
     private GameObject _laserPrefab;
@@ -77,9 +86,25 @@ public class Player : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        transform.Translate(Vector3.right  * _speed * horizontalInput * Time.deltaTime);
-        
-        transform.Translate(Vector3.up  * _speed * verticalInput * Time.deltaTime);
+
+        //if speed boost enabled
+        //move 1.5x the normal speed
+        //else 
+        //move normal speed
+        if(isSpeedBoostActive)
+        {
+            transform.Translate(Vector3.right  * _speed * 1.5f * horizontalInput * Time.deltaTime);
+            transform.Translate(Vector3.up  * _speed * 1.5f * verticalInput * Time.deltaTime);
+            
+        }
+        else
+        {
+            transform.Translate(Vector3.right  * _speed * horizontalInput * Time.deltaTime);
+            transform.Translate(Vector3.up  * _speed * verticalInput * Time.deltaTime);
+
+        }
+
+
         
         if(transform.position.y > 0)
         {
@@ -101,16 +126,44 @@ public class Player : MonoBehaviour
 
     }
 
+    public void Damage()
+    {
+        lives--;
+        if(lives < 1)
+        {
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
+        }
+
+    }
+
     public void TripleShotPowerupOn()
     {
         canTripleShot = true;
         StartCoroutine(TripleShotPowerDownRoutine());
 
     }
+
+    //method to enable to powerup
+    public void SpeedBoostPowerupOn()
+    {
+        isSpeedBoostActive = true;
+        StartCoroutine(SpeedBooseDownRoutine());
+
+    }
+
+    //coroutine method (ienumerator) to powerdown the speed
     public IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
         canTripleShot = false;
+    }
+
+    public IEnumerator SpeedBooseDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        isSpeedBoostActive = false;
+
     }
 }
 
