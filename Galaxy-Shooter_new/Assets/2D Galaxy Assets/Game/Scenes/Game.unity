@@ -888,7 +888,7 @@ MonoBehaviour:
   canTripleShot: 0
   isSpeedBoostActive: 0
   shieldsActive: 0
-  lives: 1
+  lives: 3
   _explosionPrefab: {fileID: 2242035510574622069, guid: 3d28fd94520869943aa2aae512d46c9e,
     type: 3}
   _laserPrefab: {fileID: 5697097453912137346, guid: 51c6fd2b0955d064abe0ed38ce660e45,
@@ -956,6 +956,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shields_Powerup
+      objectReference: {fileID: 0}
+    - target: {fileID: 9170348157108229689, guid: 7247ad6f92af9ce4c80df63c6cdb352d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9170348157108229694, guid: 7247ad6f92af9ce4c80df63c6cdb352d,
         type: 3}
