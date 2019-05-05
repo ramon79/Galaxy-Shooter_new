@@ -37,19 +37,32 @@ public class Player : MonoBehaviour
     
     private float _speed = 5.0f;
 
-    
+    private UIManager _uiManager;
+    private GameManager _gameManager;
+    private SpawnManager _spawnManager;
 
-
-    void Start()
+    private void Start()
     {
-        transform.position = new Vector3(0,-4.0f,0);
-        
+        transform.position = new Vector3(0,0,0);
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if(_uiManager != null)
+        {
+            _uiManager.UpdateLives(lives);
+        }
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        if(_spawnManager != null)
+        {
+            _spawnManager.StartSpawnRoutines();
+        }
+
+           
         
         
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         Movement();
 
@@ -109,9 +122,9 @@ public class Player : MonoBehaviour
 
 
         
-        if(transform.position.y > 0)
+        if(transform.position.y > 5)
         {
-            transform.position = new Vector3(transform.position.x, 0,0);
+            transform.position = new Vector3(transform.position.x, 5,0);
         }
         else if(transform.position.y < -4.2f)
         {
@@ -139,9 +152,13 @@ public class Player : MonoBehaviour
         }
         
         lives--;
+        _uiManager.UpdateLives(lives);
+        
         if(lives < 1)
         {
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            _gameManager.gameOver = true;
+            _uiManager.ShowTitleScreen();
             Destroy(this.gameObject);
         }
 

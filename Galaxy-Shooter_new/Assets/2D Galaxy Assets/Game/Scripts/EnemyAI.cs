@@ -9,8 +9,11 @@ public class EnemyAI : MonoBehaviour
     private GameObject _enemyExplosionPrefab;
     public float _speed = 5.0f;
 
+    private UIManager _uiManager;
+
     void Start()
     {
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
         
     }
@@ -41,6 +44,7 @@ public class EnemyAI : MonoBehaviour
 
             Destroy(other.gameObject);
             Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
+            _uiManager.UpdateScore();
             Destroy(this.gameObject);
 
         }
