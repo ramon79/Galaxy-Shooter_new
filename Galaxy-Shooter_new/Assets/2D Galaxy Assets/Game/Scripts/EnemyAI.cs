@@ -8,12 +8,16 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     private GameObject _enemyExplosionPrefab;
     public float _speed = 5.0f;
-
+    [SerializeField]
+    private AudioClip _clip;
+    
     private UIManager _uiManager;
+    
 
     void Start()
     {
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        
 
         
     }
@@ -45,11 +49,13 @@ public class EnemyAI : MonoBehaviour
             Destroy(other.gameObject);
             Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
             _uiManager.UpdateScore();
+            AudioSource.PlayClipAtPoint(_clip, Camera.main.transform.position, 1f);
             Destroy(this.gameObject);
 
         }
         else if(other.tag == "Player")
         {
+
             Player player = other.GetComponent<Player>();
             if(player != null)
             {
@@ -57,6 +63,8 @@ public class EnemyAI : MonoBehaviour
 
             }
             Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
+            AudioSource.PlayClipAtPoint(_clip, Camera.main.transform.position, 1f);
+            
             Destroy(this.gameObject);
 
         }

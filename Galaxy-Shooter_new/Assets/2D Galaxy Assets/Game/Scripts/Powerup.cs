@@ -9,6 +9,8 @@ public class Powerup : MonoBehaviour
     private float _speed = 3.0f;
     [SerializeField]
     private int powerupID; //0 = triple shot, 1 = speed boost, 2 =shields
+    [SerializeField]
+    private AudioClip _clip;
     void Start()
     {
         
@@ -30,6 +32,7 @@ public class Powerup : MonoBehaviour
         if(other.tag == "Player")
         {
             Player player = other.GetComponent<Player>();
+            AudioSource.PlayClipAtPoint(_clip, Camera.main.transform.position, 1f);
             if(player !=null)
             {
                 // enable triple shot

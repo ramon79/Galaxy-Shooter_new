@@ -24,6 +24,10 @@ public class Player : MonoBehaviour
     private GameObject _tripleShotPrefab;
     [SerializeField]
     private GameObject _shieldGameObject;
+
+    [SerializeField]
+    private GameObject[] _engine;
+
     [SerializeField]
     private float _fireRate = 0.25f;
     
@@ -41,6 +45,9 @@ public class Player : MonoBehaviour
     private GameManager _gameManager;
     private SpawnManager _spawnManager;
 
+    private AudioSource _audioSource;
+    private int hitCount = 0;
+
     private void Start()
     {
         transform.position = new Vector3(0,0,0);
@@ -55,6 +62,9 @@ public class Player : MonoBehaviour
         {
             _spawnManager.StartSpawnRoutines();
         }
+        _audioSource = GetComponent<AudioSource>();
+
+        hitCount = 0;
 
            
         
@@ -78,6 +88,7 @@ public class Player : MonoBehaviour
 
         if(Time.time > _canFire)
         {
+            _audioSource.Play();
             if(canTripleShot == true)
             {
                 Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
@@ -109,8 +120,8 @@ public class Player : MonoBehaviour
         //move normal speed
         if(isSpeedBoostActive)
         {
-            transform.Translate(Vector3.right  * _speed * 1.5f * horizontalInput * Time.deltaTime);
-            transform.Translate(Vector3.up  * _speed * 1.5f * verticalInput * Time.deltaTime);
+            transform.Translate(Vector3.right  * _speed * 2.0f * horizontalInput * Time.deltaTime);
+            transform.Translate(Vector3.up  * _speed * 2.0f * verticalInput * Time.deltaTime);
             
         }
         else
@@ -150,6 +161,21 @@ public class Player : MonoBehaviour
             _shieldGameObject.SetActive(false);
             return;
         }
+
+        hitCount ++;
+        if(hitCount == 1)
+        {
+            //turn left engine_failure on
+            _engine[0].SetActive(true);
+        }
+
+        else if(hitCount  == 2)
+        {
+            //turn right engine_failure on
+            _engine[1].SetActive(true);
+
+        }
+
         
         lives--;
         _uiManager.UpdateLives(lives);
